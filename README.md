@@ -1,1 +1,0 @@
-# bun-nestjs-testing
