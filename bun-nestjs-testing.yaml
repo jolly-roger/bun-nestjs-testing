@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: bun-nestjs-testing
+spec:
+  serviceName: bun-nestjs-testing
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bun-nestjs-testing
+  template:
+    metadata:
+      labels:
+        app: bun-nestjs-testing
+    spec:
+      containers:
+      - name: bun-nestjs-testing
+        image: bun-nestjs-testing
+        imagePullPolicy: IfNotPresent
+        # command: ["/bin/bash", "-c", "sleep infinity"]
+        ports:
+        - containerPort: 10300
+        volumeMounts:
+        - name: bun-nestjs-testing
+          mountPath: /bun-nestjs-testing
+  volumeClaimTemplates:
+  - metadata:
+      name: bun-nestjs-testing
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: bun-nestjs-testing
+spec:
+  selector:
+    app: bun-nestjs-testing
+  type: LoadBalancer
+  ports:
+  - port: 10300
+    targetPort: 10300
+

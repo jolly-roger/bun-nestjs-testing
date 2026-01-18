@@ -1,0 +1,9 @@
+FROM oven/bun
+
+EXPOSE 10300
+
+VOLUME ["/bun-nestjs-testing"]
+
+WORKDIR /bun-nestjs-testing
+
+CMD [ "bunx", "nest", "start", "--watch" ]

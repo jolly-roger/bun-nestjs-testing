@@ -1,0 +1,9 @@
+FROM node
+
+EXPOSE 10301
+
+VOLUME ["/node-nestjs-testing"]
+
+WORKDIR /node-nestjs-testing
+
+CMD [ "npx", "nest", "start", "--watch" ]

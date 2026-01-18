@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: node-nestjs-testing
+spec:
+  serviceName: node-nestjs-testing
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-nestjs-testing
+  template:
+    metadata:
+      labels:
+        app: node-nestjs-testing
+    spec:
+      containers:
+      - name: node-nestjs-testing
+        image: node-nestjs-testing
+        imagePullPolicy: IfNotPresent
+        # command: ["/bin/bash", "-c", "sleep infinity"]
+        ports:
+        - containerPort: 10301
+        volumeMounts:
+        - name: node-nestjs-testing
+          mountPath: /node-nestjs-testing
+  volumeClaimTemplates:
+  - metadata:
+      name: node-nestjs-testing
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-nestjs-testing
+spec:
+  selector:
+    app: node-nestjs-testing
+  type: LoadBalancer
+  ports:
+  - port: 10301
+    targetPort: 10301
+
