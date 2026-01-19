@@ -1,39 +1,39 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bun-nestjs-testing
+  name: node-nestjs-testing
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: bun-nestjs-testing
+      app: node-nestjs-testing
   template:
     metadata:
       labels:
-        app: bun-nestjs-testing
+        app: node-nestjs-testing
     spec:
       containers:
-      - name: bun-nestjs-testing
-        image: bun-nestjs-testing
+      - name: node-nestjs-testing
+        image: node-nestjs-testing
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 10300
+        - containerPort: 10301
         resources:
           limits:
-            memory: "128Mi"
-            cpu: "500m"
+            memory: "512Mi"
+            cpu: "1500m"
 
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: bun-nestjs-testing
+  name: node-nestjs-testing
 spec:
   selector:
-    app: bun-nestjs-testing
+    app: node-nestjs-testing
   type: LoadBalancer
   ports:
-  - port: 10300
-    targetPort: 10300
+  - port: 10301
+    targetPort: 10301
 
